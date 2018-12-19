@@ -1,0 +1,16 @@
+1. Launch an EC2 instance
+2. Create Container Instance roles ecsInstanceRole, ecs-tasks-default-cluster, ecsTaskExecutionRole
+3. Create a security group ecs-instances-default-cluster
+4. create IAM policy dynamodb-my-saga-demo~
+
+
+To create Table
+
+aws dynamodb create-table --table-name orders-table-dev --attribute-definitions AttributeName=orderId,AttributeType=S AttributeName=version,AttributeType=N --key-schema AttributeName=orderId,KeyType=HASH AttributeName=version,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 --endpoint http://db:8000
+
+
+aws dynamodb scan --table-name orders-table-dev --endpoint http://db:8000
+
+Event JSON, to use with Curl
+
+{"customerId":"C001", "orderId":"ID4", "items":[{ "itemId":"1", "name":"smart watch", "quantity": 5, "price": 100 },{ "itemId":"2", "name":"smart phone", "quantity":5, "price":800 }], "version":1}
